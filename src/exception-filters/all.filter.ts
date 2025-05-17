@@ -1,4 +1,10 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { Observable, throwError } from 'rxjs';
 
@@ -6,6 +12,5 @@ import { Observable, throwError } from 'rxjs';
 export class RpxExceptionFilter<T> implements ExceptionFilter {
   catch(exception: RpcException, host: ArgumentsHost): Observable<any> {
     return throwError(() => exception.getError());
-
   }
 }

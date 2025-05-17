@@ -11,19 +11,19 @@ import { UserRepository } from './repo/user.repository';
 import { AuthGuard } from '@src/guards/auth.guard';
 
 @Module({
-    imports:[
-        ConfigModule,
-        TypeOrmModule.forFeature([UserEntity,TokenEntity]),
-        JwtModule.registerAsync({
-            imports:[ConfigModule],
-            inject:[ConfigService],
-            useFactory:(config:ConfigService)=>({
-                secret:config.get<string>("JWT_SECRET")
-            })
-        })
-    ],
-    providers: [UserService,TokenService,UserRepository],
-    controllers:[UserController],
-    exports:[JwtModule,ConfigModule,UserService]
+  imports: [
+    ConfigModule,
+    TypeOrmModule.forFeature([UserEntity, TokenEntity]),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('JWT_SECRET'),
+      }),
+    }),
+  ],
+  providers: [UserService, TokenService, UserRepository],
+  controllers: [UserController],
+  exports: [JwtModule, ConfigModule, UserService],
 })
 export class UserModule {}

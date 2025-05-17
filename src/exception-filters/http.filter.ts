@@ -1,4 +1,10 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { Observable, throwError } from 'rxjs';
 
@@ -9,16 +15,18 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
     const request = context.getRequest();
     const response = context.getResponse();
 
-    const status = exception instanceof HttpException?
-      exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
+    const status =
+      exception instanceof HttpException
+        ? exception.getStatus()
+        : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    let responseError = null
-    if(exception instanceof HttpException){
+    let responseError = null;
+    if (exception instanceof HttpException) {
       responseError = exception.getResponse();
     }
 
-    console.log(exception,"rrrrrr");
-    
+    console.log(exception, 'rrrrrr');
+
     // return new RpcException({
     //     status,
     //     ...responseError
@@ -27,12 +35,11 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
     // return throwError(() => exception);
     // return new RpcException(exception.getResponse())
 
-   response.status(status).json({
-    status,
-    timestamp:  new Date(),
-    path:request.path,
-    ...responseError
-   })   
-
+    response.status(status).json({
+      status,
+      timestamp: new Date(),
+      path: request.path,
+      ...responseError,
+    });
   }
 }

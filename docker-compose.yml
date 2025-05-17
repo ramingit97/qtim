@@ -1,19 +1,19 @@
 version: '3'
 services:
 
-  post-db:
+  qtim-db:
     image: postgres
     restart: always
     networks:
       - app-network
     environment:
-      POSTGRES_DB: postdb
-      POSTGRES_USER: postuser
-      POSTGRES_PASSWORD: postpassword
+      POSTGRES_DB: qtimdb
+      POSTGRES_USER: qtimuser
+      POSTGRES_PASSWORD: qtimpassword
     volumes:
       - postgres_data:/var/lib/postgresql/data
   
-  post-service:
+  qtim-service:
     build:
       context: .
       dockerfile: .Dockerfile
@@ -21,17 +21,26 @@ services:
     networks:
       - app-network
     depends_on:
-      - post-db
+      - qtim-db
+      - redis
     environment:
-      TYPEORM_HOST: post-db
+      TYPEORM_HOST: qtim-db
       TYPEORM_PORT: 5432
-      TYPEORM_USERNAME: postuser
-      TYPEORM_PASSWORD: postpassword
-      TYPEORM_DATABASE: postdb
+      TYPEORM_USERNAME: qtimuser
+      TYPEORM_PASSWORD: qtimpassword
+      TYPEORM_DATABASE: qtimdb
     ports:
       - "3000:3000"  
     volumes:
     - ./:/app
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
 
 
 networks:

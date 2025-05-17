@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
-import {DataSource, DataSourceOptions} from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 dotenvConfig({ path: './.development.env' });
 
 // Check typeORM documentation for more information.
@@ -8,7 +8,7 @@ export const ormConfig: DataSourceOptions = {
   type: 'postgres',
   host: process.env.TYPEORM_HOST,
   port: parseInt(process.env.TYPEORM_PORT),
-  username:process.env.TYPEORM_USERNAME,
+  username: process.env.TYPEORM_USERNAME,
   password: process.env.TYPEORM_PASSWORD,
   database: process.env.TYPEORM_DATABASE,
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
@@ -25,8 +25,7 @@ export const ormConfig: DataSourceOptions = {
   // __dirname is either dist or src folder, meaning either
   // the compiled js in prod or the ts in dev
   migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
-    
 };
 
-export default registerAs('typeorm', () => ormConfig)
-export const dataSource = new DataSource(ormConfig)
+export default registerAs('typeorm', () => ormConfig);
+export const dataSource = new DataSource(ormConfig);

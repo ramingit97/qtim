@@ -5,13 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TokenEntity } from './token.entity';
 
 @Module({
-  imports:[
-    TypeOrmModule.forFeature([TokenEntity]),
-    JwtModule
-  ],
-  providers: [
-    TokenService
-  ],
-  exports:[TokenService,JwtModule]
+  imports: [TypeOrmModule.forFeature([TokenEntity]), JwtModule],
+  providers: [TokenService],
+  exports: [TokenService, JwtModule],
 })
 export class TokensModule {}
